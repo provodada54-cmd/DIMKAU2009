@@ -4709,12 +4709,11 @@ function Library:Notify(...)
     local FakeBackground = New("Frame", {
         AutomaticSize = Enum.AutomaticSize.Y,
         BackgroundTransparency = 1,
-        Size = UDim2.fromScale(1, 0),
+        Size = UDim2.fromScale(300, 0),
         Visible = false,
         Parent = NotificationArea,
     })
 
-    --// gamesense style: компактное уведомление без скруглений
     local Holder = New("Frame", {
         AutomaticSize = Enum.AutomaticSize.Y,
         BackgroundColor3 = "MainColor",
