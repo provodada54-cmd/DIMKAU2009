@@ -4735,14 +4735,6 @@ function Library:Notify(...)
     })
     Library:AddOutline(Holder)
 
-    --// gamesense: accent left border
-    New("Frame", {
-        BackgroundColor3 = "AccentColor",
-        Size = UDim2.new(0, 2, 1, 0),
-        ZIndex = 6,
-        Parent = Holder,
-    })
-
     local ContentContainer = New("Frame", {
         BackgroundTransparency = 1,
         AutomaticSize = Enum.AutomaticSize.XY,
