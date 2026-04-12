@@ -591,36 +591,10 @@ function GlobalChat:CreateWindow()
         }):Play()
     end)
 
-    --// Character count label
-    local CharCount = New("TextLabel", {
-        BackgroundTransparency = 1,
-        AnchorPoint      = Vector2.new(0.5, 1),
-        Position         = UDim2.new(0.5, 0, 1, -2),
-        Size             = UDim2.fromOffset(100, 12),
-        Text             = "0/200",
-        TextColor3       = Color3.fromRGB(80, 80, 80),
-        TextSize         = 11,
-        Font             = Enum.Font.Code,
-        Parent           = InputArea,
-    })
-
-    TB:GetPropertyChangedSignal("Text"):Connect(function()
-        local len = #TB.Text
-        CharCount.Text = len .. "/200"
-        if len >= 180 then
-            CharCount.TextColor3 = L.Scheme.RedColor
-        else
-            CharCount.TextColor3 = Color3.fromRGB(80, 80, 80)
-        end
-    end)
-
     --// Send logic
     local function DoSend()
         local msg = TB.Text:match("^%s*(.-)%s*$")
         if not msg or msg == "" then return end
-        if #msg > 200 then
-            msg = msg:sub(1, 200)
-        end
         TB.Text = ""
         self:SendMessage(msg)
     end
@@ -790,63 +764,6 @@ function GlobalChat:CreateGroupBox(groupbox)
                     self.ChatWindow.Visible = false
                 end
             end
-        end,
-    })
-
-    groupbox:AddDivider()
-
-    groupbox:AddButton({
-        Text    = "Clear chat history",
-        Func    = function()
-            if self.ScrollFrame then
-                for _, c in ipairs(self.ScrollFrame:GetChildren()) do
-                    if c:IsA("Frame") then
-                        c:Destroy()
-                    end
-                end
-                messageHistory = {}
-            end
-            if L then
-                L:Notify({
-                    Title       = "Global Chat",
-                    Description = "Chat history cleared",
-                    Time        = 3,
-                })
-            end
-        end,
-        Tooltip = "Clears locally displayed messages",
-    })
-
-    groupbox:AddSlider("GlobalChatUpdateInterval", {
-        Text    = "Update interval",
-        Default = GlobalChat.UpdateInterval,
-        Min     = 1,
-        Max     = 10,
-        Rounding = 0,
-        Suffix  = "s",
-        Tooltip = "How often to fetch new messages",
-        Callback = function(Value)
-            GlobalChat.UpdateInterval = Value
-        end,
-    })
-
-    groupbox:AddSlider("GlobalChatMaxMessages", {
-        Text    = "Max messages",
-        Default = GlobalChat.MaxMessages,
-        Min     = 10,
-        Max     = 100,
-        Rounding = 0,
-        Callback = function(Value)
-            GlobalChat.MaxMessages = Value
-        end,
-    })
-
-    groupbox:AddToggle("GlobalChatBubbles", {
-        Text    = "3D chat bubbles",
-        Default = true,
-        Tooltip = "Show bubbles above player heads",
-        Callback = function(Value)
-            GlobalChat.BubbleDisplayTime = Value and 10 or 0
         end,
     })
 end
