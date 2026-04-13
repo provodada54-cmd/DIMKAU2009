@@ -5531,6 +5531,7 @@ function Library:CreateWindow(WindowInfo)
             --// gamesense: accent left indicator для активного таба
             local ActiveIndicator = New("Frame", {
                 BackgroundColor3 = "AccentColor",
+                Position = UDim2.new(0, -8, 0.15, 0),
                 Size = UDim2.new(0, 2, 1, 0),
                 Visible = false,
                 ZIndex = 2,
